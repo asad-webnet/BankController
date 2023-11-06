@@ -65,7 +65,15 @@ public class BankController {
             return new ResponseEntity<>("Account not found", HttpStatus.NOT_FOUND);
         }
     }
-
+    @GetMapping
+    public ResponseEntity<?> getAllAccounts() {
+        var accounts = accountMap.values();
+        if (accounts.size() != 0) {
+            return new ResponseEntity<>(accounts, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/{accountNumber}")
     public ResponseEntity<Account> getAccount(@PathVariable int accountNumber) {
         Account account = accountMap.get(accountNumber);
@@ -76,15 +84,7 @@ public class BankController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAllAccounts(@PathVariable int accountNumber) {
-        var accounts = accountMap.values();
-        if (accounts.size() != 0) {
-            return new ResponseEntity<>(accounts, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
 
     @DeleteMapping("/{accountNumber}")
     public ResponseEntity<?> removeAccount(@PathVariable int accountNumber) {
